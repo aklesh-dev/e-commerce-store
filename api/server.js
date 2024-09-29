@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
 // mongoDB connection
 import connectDB from './lib/db.js';
@@ -12,6 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 5000
 
 app.use(express.json()); // for parsing application/json, allows us to use req.body
+app.use(cookieParser()); // for parsing cookies, allows us to use req.cookies
 
 app.use('/api/auth', authRoutes);
 
