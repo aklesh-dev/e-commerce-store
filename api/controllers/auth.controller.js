@@ -53,7 +53,32 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  res.send('login route called');
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+    if(user && (await user.comparePassword(password))) {
+      const { accessToken, refreshToken } = generateTokens(user._id);
+      await storeRefreshToken(user._id, refreshToken); // store refresh token in redis
+      setCookies(res, accessToken, refreshToken);
+      res.status(200).json({ 
+        user: {
+          _id: user._id,
+          email: user.email,
+          username: user.username,
+          role: user.role,
+        }, 
+        message: "Login successful" 
+      });
+    } else {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
 };
 
 export const logout = async (req, res) => {
