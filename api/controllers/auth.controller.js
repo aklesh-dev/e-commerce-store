@@ -95,3 +95,34 @@ export const logout = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });    
   }
 };
+
+// this will refresh the access token
+export const refreshToken = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      return res.status(401).json({ message: "No refresh token found!"});
+    }
+
+    const decode = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const storeToken = await redis.get(`refreshToken:${decode.userId}`);
+
+    if(storeToken !== refreshToken){
+      return res.status(401).json({ message: "Invalid refresh token!"});
+    }
+
+    const accessToken = jwt.sign({ userId: decode.userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" });
+
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 1000 * 60 * 15,
+    });
+    res.status(200).json({ message: "Access token refreshed successfully" });
+
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
