@@ -127,5 +127,11 @@ export const refreshToken = async (req, res) => {
   }
 };
 
-// TODO: Implement getProfile
-export const getProfile = async (req, res) => {};
+
+export const getProfile = async (req, res) => {
+  try {
+    res.status(200).json({ user: req.user });  // req.user is the authenticated user
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
