@@ -3,19 +3,22 @@ import { motion } from "framer-motion";
 import { ArrowRight, Loader, Lock, Mail, User, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
+import { useUserStore } from "../stores/useUserStore";
 
 function SignUpPage() {
   const loading = false;
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: ""
   });
 
+  const { signup } = useUserStore();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData)
+    signup(formData);
   };
 
   return (
@@ -44,8 +47,8 @@ function SignUpPage() {
                 type="text"
                 required
                 placeholder="Izumi Raizel"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                value={formData.username}
+                onChange={(e) => setFormData({ ...formData, username: e.target.value })}
               />
             </div>
 
@@ -56,7 +59,7 @@ function SignUpPage() {
                 icon={Mail}
                 type="email"
                 required
-                placeholder="izumi@example.com"
+                placeholder="you@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               />
