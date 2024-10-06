@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import Input from "../components/Input";
 import { useUserStore } from "../stores/useUserStore";
 
-function SignUpPage() {
-  const loading = false;
+function SignUpPage() {  
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -14,7 +13,7 @@ function SignUpPage() {
     confirmPassword: ""
   });
 
-  const { signup } = useUserStore();
+  const { signup, loading } = useUserStore();
 
   const handleSubmit = (e) => {
     e.preventDefault();

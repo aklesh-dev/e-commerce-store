@@ -1,19 +1,22 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { UserPlus, Mail, Lock, ArrowRight, LogIn } from "lucide-react";
+import { Mail, Lock, ArrowRight, LogIn, Loader } from "lucide-react";
 import { motion } from "framer-motion";
 import Input from "../components/Input";
+import { useUserStore } from "../stores/useUserStore";
 
 function LoginPage() {
-  const [formData, setFormData] = useState({    
+  const [formData, setFormData] = useState({
     email: "",
-    password: "",    
+    password: "",
   });
+  
 
-  const loading = false;
+  const { login, loading } = useUserStore();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
+    login(formData);    
   };
 
   return (
@@ -34,7 +37,7 @@ function LoginPage() {
       >
         <div className="bg-gray-800 py-8 px-4 shadow-sm sm:rounded-lg sm:px-10 bg-opacity-50 backdrop-filter backdrop-blur-xl">
           <form onSubmit={handleSubmit} className="space-y-6">
-            
+
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-gray-300">Email address</label>
               <Input
@@ -59,7 +62,7 @@ function LoginPage() {
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               />
             </div>
-            
+
 
             <motion.button
               className="mt-5 w-full flex justify-center items-center py-3 px-4 bg-gradient-to-r from-green-600 to-emerald-800 text-white font-semibold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200 uppercase"
