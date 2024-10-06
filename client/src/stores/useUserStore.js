@@ -40,4 +40,29 @@ export const useUserStore = create((set, get) => ({
     
   },
 
+  checkAuth: async () => {
+    set({ checkingAuth: true});
+    try {
+      const res = await axios.get('/auth/profile');
+      set({ user: res.data.user, checkingAuth: false });
+    } catch (error) {
+      set({ checkingAuth: false, user: null });
+      toast.error(error.response?.data.message || "Error checking auth");
+    }
+  },
+
+  logout: async () => {
+    set({ loading: true });
+    try {
+      await axios.post('/auth/logout');
+      set({ user: null, loading: false });
+      toast.success("Logged out successfully");
+    } catch (error) {
+      set({ loading: false });
+      toast.error(error.response?.data.message || "Error logging out");
+    };
+  },
+
 }));
+
+// TODO: Implement axios interceptors to handle refreshing access tokens
