@@ -43,13 +43,13 @@ export const createProduct = async (req, res) => {
       cloudinaryResponse = await cloudinary.uploader.upload(image, {folder: "products"});
     }
 
-    const product = new Product.create({
+    const product = await Product.create({
       name,
       description,
       price,
       category,
       image: cloudinaryResponse?.secure_url ? cloudinaryResponse.secure_url : "",
-    });
+    });    
     res.status(201).json(product);
   } catch (error) {
     res.status(500).json({ messsage: "Internal Server Error", error: error.messsage });    

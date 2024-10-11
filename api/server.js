@@ -17,14 +17,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000
 
-app.use(express.json()); // for parsing application/json, allows us to use req.body
+app.use(express.json({ limit: "10mb" })); // for parsing application/json, allows us to use req.body
 app.use(cookieParser()); // for parsing cookies, allows us to use req.cookies
 
 app.use('/api/auth', authRoutes);
-app.use('/api/products', productRoutes); 
-app.use('/api/cart', cartRoutes); 
-app.use('/api/coupons', couponRoutes); 
-app.use('/api/payment', paymentRoutes); 
+app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/coupons', couponRoutes);
+app.use('/api/payment', paymentRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
 app.listen(PORT, () => {
