@@ -4,7 +4,7 @@ import { Loader, PlusCircle, Upload } from 'lucide-react';
 import { useProductStore } from '../stores/useProductStore';
 
 // categories array
-const categories = ['jean', 't-shirt', 'bag', 'glasses', 'jacket', 'suit', 'shoe'];
+const categories = ['jeans', 't-shirts', 'bags', 'glasses', 'jackets', 'suits', 'shoes'];
 
 function CreateProductForm() {
   const [newProduct, setNewProduct] = useState({
