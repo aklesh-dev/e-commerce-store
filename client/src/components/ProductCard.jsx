@@ -1,10 +1,12 @@
 import toast from "react-hot-toast";
 import { ShoppingCart } from "lucide-react";
 import { useUserStore } from "../stores/useUserStore";
+import { useCartStore } from "../stores/useCartStore";
 
 export default function ProductCard({ product }) {
 
   const { user } = useUserStore();
+  const { addToCart } = useCartStore();
 
   const handleAddToCart = () => {
     if (!user) {
@@ -17,10 +19,7 @@ export default function ProductCard({ product }) {
     }
     else {
       // Add to cart logic here
-      toast.success("Added to cart", {
-        duration: 2000,
-        icon: "👍",
-      });
+      addToCart(product);      
     }
   };
 
