@@ -46,8 +46,8 @@ export const useUserStore = create((set, get) => ({
       const res = await axios.get('/auth/profile');
       set({ user: res.data.user, checkingAuth: false });
     } catch (error) {
+      console.error(error.message);
       set({ checkingAuth: false, user: null });
-      toast.error(error.response?.data.message || "Error checking auth");
     }
   },
 

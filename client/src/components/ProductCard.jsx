@@ -25,7 +25,7 @@ export default function ProductCard({ product }) {
 
   return (
     <section className="flex flex-col relative overflow-hidden shadow-lg rounded-lg border border-gray-700">
-      <div className="relative mx-3 mt-3 flex h-60 w-60 overflow-hidden rounded-xl">
+      <div className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl">
         <img src={product.image} className="object-cover w-full h-full" alt="product image" />
         <div className="absolute inset-0 bg-black bg-opacity-20"></div>
       </div>
