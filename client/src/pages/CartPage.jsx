@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import CartItem from "../components/CartItem";
 import PeopleAlsoBrought from "../components/PeopleAlsoBrought";
 import OrderSummary from "../components/OrderSummary";
+import GiftCouponCard from "../components/GiftCouponCard";
 
 export default function CartPage() {
   const { cart } = useCartStore();
@@ -37,7 +38,7 @@ export default function CartPage() {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <OrderSummary />
-              {/* <GiftCouponCart />  */}
+              <GiftCouponCard /> 
 
             </motion.div>
           )}
