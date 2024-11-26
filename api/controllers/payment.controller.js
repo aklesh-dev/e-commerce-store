@@ -105,7 +105,7 @@ export const checkoutSuccess = async (req, res) => {
         success: true,
         message: "Payment successful, order created successfully, and coupon deactivated if used.",
         orderId: newOrder._id,
-      })
+      });
 
     }
   } catch (error) {

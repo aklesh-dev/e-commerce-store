@@ -20,6 +20,10 @@ export const useCartStore = create((set, get) => ({
     }
   },
 
+  clearCart: async () => {
+    set({ cart: [], coupon: null, total: 0, subtotal: 0 });
+  },
+
   addToCart: async (product) => {
     try {
       await axios.post("/cart", { productId: product._id });
@@ -58,7 +62,7 @@ export const useCartStore = create((set, get) => ({
       }
       await axios.put(`/cart/${productId}`, { quantity });
       set((prevState) => ({
-        cart: prevState.cart.map((item) => (item._id === productId ? {...item, quantity} : item )),
+        cart: prevState.cart.map((item) => (item._id === productId ? { ...item, quantity } : item)),
       }));
       get().calculateTotals();
 
